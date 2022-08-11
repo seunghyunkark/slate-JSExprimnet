@@ -1,6 +1,7 @@
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { useState } from 'react';
+import styles from '../styles/Wyswyg.module.css';
 
 function CKEditorContainer() {
   const [textData, setTextData] = useState('');
@@ -34,7 +35,7 @@ function CKEditorContainer() {
           console.log('Focus.', editor);
         }}
       />
-      <table>
+      <table className={styles.table}>
         <tr>
           <th>Show text data</th>
         </tr>

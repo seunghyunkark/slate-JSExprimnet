@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
+import styles from '../styles/Wyswyg.module.css';
 
 function QuillContainer() {
   const [textData, setTextData] = useState('');
@@ -14,7 +15,7 @@ function QuillContainer() {
         </a>
       </p>
       <ReactQuill theme='snow' value={textData} onChange={setTextData} />
-      <table>
+      <table className={styles.table}>
         <tr>
           <th>Show text data</th>
         </tr>
