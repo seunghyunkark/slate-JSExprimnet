@@ -13,10 +13,10 @@ function Home() {
 
       <main className={styles.main}>
         <h1 className={styles.title}>
-          Welcome to <a src='/'>Jiyun's Lab</a>
+          Welcome to <a src='/'>{`Jiyun's Lab`}</a>
         </h1>
 
-        <p className={styles.description}>Let's get started !</p>
+        <p className={styles.description}>{`Let's get started !'`}</p>
         <div className={styles.grid}>
           <Link href='/wyswyg' className={styles.card}>
             <h2>WYSWYG &rarr;</h2>
