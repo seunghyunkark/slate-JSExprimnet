@@ -1,4 +1,5 @@
 import Head from 'next/head';
+import Link from 'next/link';
 import styles from '../styles/Home.module.css';
 
 function Home() {
@@ -17,24 +18,24 @@ function Home() {
 
         <p className={styles.description}>Let's get started !</p>
         <div className={styles.grid}>
-          <a href='/wyswyg' className={styles.card}>
+          <Link href='/wyswyg' className={styles.card}>
             <h2>WYSWYG &rarr;</h2>
             <p>Find some WYSWYG examples.</p>
-          </a>
+          </Link>
 
-          <a href='/' className={styles.card}>
+          <Link href='/' className={styles.card}>
             <h2>Test2 &rarr;</h2>
             <p>To be continued</p>
-          </a>
+          </Link>
 
-          <a href='/' className={styles.card}>
+          <Link href='/' className={styles.card}>
             <h2>Test3 &rarr;</h2>
             <p>To be continued</p>
-          </a>
-          <a href='/' className={styles.card}>
+          </Link>
+          <Link href='/' className={styles.card}>
             <h2>Test4 &rarr;</h2>
             <p>To be continued</p>
-          </a>
+          </Link>
         </div>
       </main>
 

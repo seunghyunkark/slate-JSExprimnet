@@ -16,7 +16,7 @@ function QuillContainer() {
       <ReactQuill theme='snow' value={textData} onChange={setTextData} />
       <table>
         <tr>
-          <th>Show text's data</th>
+          <th>Show text data</th>
         </tr>
         <tr>
           <td>{textData}</td>
