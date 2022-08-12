@@ -2,7 +2,7 @@ import { useState } from 'react';
 import styled from 'styled-components';
 import { createEditor } from 'slate';
 import { Slate, Editable, withReact } from 'slate-react';
-import styles from '../styles/Wyswyg.module.css';
+import styles from '../../styles/Wyswyg.module.css';
 
 const Orange = styled.span`
   color: salmon;
@@ -14,22 +14,13 @@ function SlateContainer() {
   const initialValue = [
     {
       type: 'paragraph',
-      children: [{ text: 'A line of text in a paragraph.' }],
+      children: [{ text: 'Hello World' }],
     },
   ];
   return (
     <>
-      <h2>Slate</h2>
-      <p>npm install slate slate-react</p>
-      <p>
-        <a href='https://docs.slatejs.org/'>Usuage of Slate</a>
-      </p>
-      <ul>
-        <li>줄바꿈할 때마다 배열에 객체가 하나씩 추가됨(onChange의 이벤트)</li>
-        <li>
-          {`<Slate>에 적용되는 것(onChange)과 <Editable>에 적용되는 것(onKeyDown) 구분 필요`}
-        </li>
-      </ul>
+      <h2>Color Change</h2>
+      <p> POST : http://pcanpi.iptime.org:9999/simple_color</p>
       <div className={styles.editor}>
         <Slate
           editor={editor}
@@ -53,20 +44,6 @@ function SlateContainer() {
           />
         </Slate>
       </div>
-      <table className={styles.table}>
-        <tr>
-          <th>Show text data</th>
-        </tr>
-        <tr>
-          <td>{textData}</td>
-        </tr>
-      </table>
-      <button
-        className={styles.button}
-        onClick={() => setTextData((cur) => <Orange>{cur}</Orange>)}
-      >
-        오렌지
-      </button>
     </>
   );
 }

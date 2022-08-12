@@ -28,7 +28,7 @@ export default function Wyswig() {
   return (
     <>
       <h3>👀 See Wysiwyg Editors Below</h3>
-      {/* <Slate /> */}
+      <Slate />
       <Quill />
       <CKEditor />
       <Draftjs />
