@@ -6,3 +6,21 @@
 .table th {
   background-color: #0070f3;
 }
+
+.editor {
+  box-shadow: 0 8px 8px 2px lightgrey;
+  margin-bottom: 30px;
+}
+
+.list {
+  padding-left: 0;
+  list-style-position: inside;
+}
+
+.button {
+  margin: 10px 0;
+  padding: 4px 10px;
+  border: none;
+  border-radius: 4px;
+  background-color: salmon;
+}
