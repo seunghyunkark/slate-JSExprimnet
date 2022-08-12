@@ -28,7 +28,7 @@ export default function Wyswig() {
   return (
     <>
       <h3>👀 See Wysiwyg Editors Below</h3>
-      <Slate />
+      {/* <Slate /> */}
       <Quill />
       <CKEditor />
       <Draftjs />
@@ -44,6 +44,11 @@ export default function Wyswig() {
         <li>
           <a href='https://blog.dalgu.app/dev/2'>
             기술 블로그 위한 contentEditable WYSIWYG 에디터 제작기
+          </a>
+        </li>
+        <li>
+          <a href='https://jheo.io/blog/a-tales-of-two-editor/'>
+            두 에디터 이야기
           </a>
         </li>
       </ul>

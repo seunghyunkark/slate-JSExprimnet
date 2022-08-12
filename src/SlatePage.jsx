@@ -33,7 +33,7 @@ function SlateContainer() {
       <div className={styles.editor}>
         <Slate
           editor={editor}
-          value={initialValue}
+          value={textData}
           onChange={(e) => {
             console.log('[Slate]onChange: ', e);
             console.log('[Slate]textValue: ', e[0].children[0].text);
