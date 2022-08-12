@@ -54,12 +54,16 @@ function SlateContainer() {
         </Slate>
       </div>
       <table className={styles.table}>
-        <tr>
-          <th>Show text data</th>
-        </tr>
-        <tr>
-          <td>{textData}</td>
-        </tr>
+        <thead>
+          <tr>
+            <th>Show text data</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>{textData}</td>
+          </tr>
+        </tbody>
       </table>
       <button
         className={styles.button}

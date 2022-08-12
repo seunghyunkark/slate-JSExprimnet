@@ -12,6 +12,7 @@
     "@ckeditor/ckeditor5-build-classic": "^35.0.1",
     "@ckeditor/ckeditor5-react": "^5.0.2",
     "@tinymce/tinymce-react": "^4.2.0",
+    "axios": "^0.27.2",
     "draft-js": "^0.11.7",
     "next": "12.2.4",
     "react": "18.2.0",
