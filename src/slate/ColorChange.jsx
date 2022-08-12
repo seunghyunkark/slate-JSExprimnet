@@ -19,15 +19,14 @@ function SlateContainer() {
     },
   ];
   const handlePost = async () => {
-    // axios
-    //   .post('192.168.0.63:9999/simple_color', {
-    //     text: 'Hello World',
-    //   })
-    //   .then((res) => {
-    //     console.log(res);
-    //   })
-    //   .catch((err) => console.warn(err));
-    console.log(Text);
+    axios
+      .post('http://192.168.0.3:9999/simple_color', {
+        text: 'Hello World',
+      })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => console.warn(err));
   };
   return (
     <>
