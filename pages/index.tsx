@@ -13,7 +13,7 @@ function Home() {
 
       <main className={styles.main}>
         <h1 className={styles.title}>
-          Welcome to <a src='/'>{`Jiyun's Lab`}</a>
+          Welcome to <Link href='/'>{`Jiyun's Lab`}</Link>
         </h1>
 
         <p className={styles.description}>{`Let's get started !`}</p>
