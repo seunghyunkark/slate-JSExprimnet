@@ -2,19 +2,19 @@ import dynamic from 'next/dynamic';
 import styles from '../styles/Wyswyg.module.css';
 import styled from 'styled-components';
 
-const Quill = dynamic(() => import('../src/QuillPage'), {
+const Quill = dynamic(() => import('../src/editors/QuillPage'), {
   ssr: false,
 });
-const CKEditor = dynamic(() => import('../src/CKEditorPage'), {
+const CKEditor = dynamic(() => import('../src/editors/CKEditorPage'), {
   ssr: false,
 });
-const Draftjs = dynamic(() => import('../src/DraftjsPage'), {
+const Draftjs = dynamic(() => import('../src/editors/DraftjsPage'), {
   ssr: false,
 });
-const Slate = dynamic(() => import('../src/SlatePage'), {
+const Slate = dynamic(() => import('../src/editors/SlatePage'), {
   ssr: false,
 });
-const TinyMCE = dynamic(() => import('../src/TinyMCEPage'), {
+const TinyMCE = dynamic(() => import('../src/editors/TinyMCEPage'), {
   ssr: false,
 });
 

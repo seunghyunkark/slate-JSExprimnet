@@ -25,10 +25,10 @@ function Home() {
             </div>
           </Link>
 
-          <Link href='/' className={styles.card}>
+          <Link href='/slate' className={styles.card}>
             <div className={styles.card}>
-              <h2>Test2 &rarr;</h2>
-              <p>To be continued</p>
+              <h2>Slate Test &rarr;</h2>
+              <p>Experimnets of slate component</p>
             </div>
           </Link>
 

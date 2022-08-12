@@ -2,7 +2,7 @@ import { useState } from 'react';
 import styled from 'styled-components';
 import { createEditor } from 'slate';
 import { Slate, Editable, withReact } from 'slate-react';
-import styles from '../styles/Wyswyg.module.css';
+import styles from '../../styles/Wyswyg.module.css';
 
 const Orange = styled.span`
   color: salmon;
