@@ -1,21 +1,9 @@
 import { useState } from 'react';
 import styled from 'styled-components';
-import { createEditor, Descendant, BaseElement } from 'slate';
+import { createEditor, Descendant } from 'slate';
 import { Slate, Editable, withReact } from 'slate-react';
 import styles from '../../styles/Wyswyg.module.css';
-import { BaseEditor } from 'slate';
-import { ReactEditor } from 'slate-react';
 
-type CustomElement = { type: 'paragraph'; children: CustomText[] };
-type CustomText = { text: string; bold?: true };
-
-declare module 'slate' {
-  interface CustomTypes {
-    Editor: BaseEditor & ReactEditor;
-    Element: CustomElement;
-    Text: CustomText;
-  }
-}
 const Orange = styled.span`
   color: salmon;
 `;
@@ -40,6 +28,10 @@ function SlateContainer() {
       <ul>
         <li>줄바꿈할 때마다 배열에 객체가 하나씩 추가됨(onChange의 이벤트)</li>
         <li>{`<Slate>에 적용되는 것(onChange)과 <Editable>에 적용되는 것(onKeyDown) 구분 필요`}</li>
+        <li>
+          타입스크립트 설정 <a href='https://docs.slatejs.org/concepts/12-typescript'>참고</a>
+          <li></li>
+        </li>
       </ul>
       <div className={styles.editor}>
         <Slate editor={editor} value={initialValue}>
