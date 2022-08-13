@@ -30,7 +30,6 @@ function SlateContainer() {
         <li>{`<Slate>에 적용되는 것(onChange)과 <Editable>에 적용되는 것(onKeyDown) 구분 필요`}</li>
         <li>
           타입스크립트 설정 <a href='https://docs.slatejs.org/concepts/12-typescript'>참고</a>
-          <li></li>
         </li>
       </ul>
       <div className={styles.editor}>
