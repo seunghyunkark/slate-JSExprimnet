@@ -12,6 +12,7 @@
     "@ckeditor/ckeditor5-build-classic": "^35.0.1",
     "@ckeditor/ckeditor5-react": "^5.0.2",
     "@tinymce/tinymce-react": "^4.2.0",
+    "@types/ckeditor": "^4.9.10",
     "@types/node": "^18.7.2",
     "@types/react": "^18.0.17",
     "axios": "^0.27.2",
@@ -26,6 +27,8 @@
     "typescript": "^4.7.4"
   },
   "devDependencies": {
+    "@types/draft-js": "^0.11.9",
+    "@types/styled-components": "^5.1.26",
     "eslint": "8.21.0",
     "eslint-config-next": "12.2.4"
   }
