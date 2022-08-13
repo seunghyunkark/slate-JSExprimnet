@@ -1,6 +1,4 @@
 import dynamic from 'next/dynamic';
-import styles from '../styles/Wyswyg.module.css';
-import styled from 'styled-components';
 
 const Slate = dynamic(() => import('../src/editors/SlatePage'), {
   ssr: false,

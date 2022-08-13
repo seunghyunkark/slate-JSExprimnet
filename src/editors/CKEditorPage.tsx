@@ -1,17 +1,14 @@
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { useState } from 'react';
-import styles from '../styles/Wyswyg.module.css';
+import styles from '../../styles/Wyswyg.module.css';
 
 function CKEditorContainer() {
   const [textData, setTextData] = useState('');
   return (
     <>
       <h2>CKEditor</h2>
-      <p>
-        npm install --save @ckeditor/ckeditor5-react
-        @ckeditor/ckeditor5-build-classic
-      </p>
+      <p>npm install --save @ckeditor/ckeditor5-react @ckeditor/ckeditor5-build-classic</p>
       <p>
         <a href='https://ckeditor.com/docs/ckeditor5/latest/installation/getting-started/quick-start.html'>
           Usuage of CKEditor
