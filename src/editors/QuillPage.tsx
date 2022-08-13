@@ -39,9 +39,7 @@ function QuillContainer() {
           </tr>
         </tbody>
       </table>
-      <button className={styles.button} onClick={() => setTextData((cur) => <Orange>{cur}</Orange>)}>
-        오렌지
-      </button>
+      <button className={styles.button}>오렌지</button>
     </>
   );
 }
