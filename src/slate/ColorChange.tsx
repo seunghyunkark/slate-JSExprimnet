@@ -1,7 +1,7 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
-import { createEditor, Transforms, Text } from 'slate';
+import { createEditor, Transforms, Descendant } from 'slate';
 import { Slate, Editable, withReact } from 'slate-react';
 import styles from '../../styles/Wyswyg.module.css';
 
@@ -9,18 +9,19 @@ const Orange = styled.span`
   color: salmon;
 `;
 
-function SlateContainer() {
+function ColorChange() {
   const [editor] = useState(() => withReact(createEditor()));
   const [text, setText] = useState('');
-  const initialValue = [
+  const initialValue: Descendant[] = [
     {
       type: 'paragraph',
       children: [{ text: 'Hello World' }],
     },
   ];
+
   const handlePost = async () => {
     axios
-      .post('http://192.168.0.3:9999/simple_color', {
+      .post('http://pcanpi.iptime.org:9999/simple_color', {
         text: 'Hello World',
       })
       .then((res) => {
@@ -33,18 +34,23 @@ function SlateContainer() {
       <h2>Color Change</h2>
       <p> POST : http://pcanpi.iptime.org:9999/simple_color</p>
       <div className={styles.editor}>
-        <Slate editor={editor} value={initialValue}>
-          <Editable
-            onKeyDown={(event) => {
-              if (event.key === 'Enter') {
-                event.preventDefault();
-                editor.insertText('Enter');
-              }
-            }}
-          />
+        <Slate
+          editor={editor}
+          value={initialValue}
+          onChange={(value) => {
+            const isAstChange = editor.operations.some(
+              (op) => 'set_selection' !== op.type
+            );
+            if (isAstChange) {
+              const content = JSON.stringify(value);
+              setText(content);
+            }
+          }}
+        >
+          <Editable />
         </Slate>
       </div>
-
+      <div>{text}</div>
       <button className={styles.button} onClick={handlePost}>
         Change Color
       </button>
@@ -52,4 +58,4 @@ function SlateContainer() {
   );
 }
 
-export default SlateContainer;
+export default ColorChange;

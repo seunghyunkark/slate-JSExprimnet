@@ -17,6 +17,7 @@ function SlateContainer() {
   ];
 
   const [editor] = useState(() => withReact(createEditor()));
+  const [text, setText] = useState('');
 
   return (
     <>
@@ -29,21 +30,31 @@ function SlateContainer() {
         <li>줄바꿈할 때마다 배열에 객체가 하나씩 추가됨(onChange의 이벤트)</li>
         <li>{`<Slate>에 적용되는 것(onChange)과 <Editable>에 적용되는 것(onKeyDown) 구분 필요`}</li>
         <li>
-          타입스크립트 설정 <a href='https://docs.slatejs.org/concepts/12-typescript'>참고</a>
+          타입스크립트 설정{' '}
+          <a href='https://docs.slatejs.org/concepts/12-typescript'>참고</a>
+        </li>
+        <li>
+          타입스크립트 예제{' '}
+          <a href='https://codesandbox.io/s/6zpfi?file=/src/components/SlateEditor/SlateEditor.tsx'>
+            참고
+          </a>
         </li>
       </ul>
       <div className={styles.editor}>
-        <Slate editor={editor} value={initialValue}>
-          <Editable
-            onKeyDown={(event) => {
-              if (event.key === '&') {
-                // Prevent the ampersand character from being inserted.
-                event.preventDefault();
-                // Execute the `insertText` method when the event occurs.
-                editor.insertText('and');
-              }
-            }}
-          />
+        <Slate
+          editor={editor}
+          value={initialValue}
+          onChange={(value) => {
+            const isAstChange = editor.operations.some(
+              (op) => 'set_selection' !== op.type
+            );
+            if (isAstChange) {
+              const content = JSON.stringify(value);
+              setText(content);
+            }
+          }}
+        >
+          <Editable />
         </Slate>
       </div>
       <table className={styles.table}>
@@ -54,7 +65,7 @@ function SlateContainer() {
         </thead>
         <tbody>
           <tr>
-            <td></td>
+            <td>{text}</td>
           </tr>
         </tbody>
       </table>
