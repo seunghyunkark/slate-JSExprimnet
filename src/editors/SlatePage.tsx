@@ -39,6 +39,12 @@ function SlateContainer() {
             참고
           </a>
         </li>
+        <li>
+          paragraph 단위별 변화 : styled component 태그 값 반영 가능
+          <a href='https://docs.slatejs.org/walkthroughs/03-defining-custom-elements'>
+            참고
+          </a>
+        </li>
       </ul>
       <div className={styles.editor}>
         <Slate
