@@ -4,19 +4,53 @@ import { Slate, Editable, withReact } from 'slate-react';
 import styles from '../../styles/Wyswyg.module.css';
 import { CustomEditor } from './CustomEditor';
 import styled from 'styled-components';
+import { jsx } from 'slate-hyperscript';
 
-function Experiment2() {
+function Experiment4() {
   const [editor] = useState(() => withReact(createEditor()));
   const [text, setText] = useState('');
-  const initialValue = [
-    {
-      type: 'paragraph',
-      children: [{ text: 'Text Something ...' }],
-    },
-  ];
 
-  const serialize = (nodes) => {
-    return nodes.map((n) => Node.string(n)).join('\n');
+  const deserialize = (el, markAttributes = {}) => {
+    if (el.nodeType === Node.TEXT_NODE) {
+      return jsx('text', markAttributes, el.textContent);
+    } else if (el.nodeType !== Node.ELEMENT_NODE) {
+      return null;
+    }
+
+    const nodeAttributes = { ...markAttributes };
+
+    // define attributes for text nodes
+    switch (el.nodeName) {
+      case 'strong':
+        nodeAttributes.custom = true;
+    }
+
+    const children = Array.from(el.childNodes)
+      .map((node) => deserialize(node, nodeAttributes))
+      .flat();
+
+    if (children.length === 0) {
+      children.push(jsx('text', nodeAttributes, ''));
+    }
+
+    switch (el.nodeName) {
+      case 'BODY':
+        return jsx('fragment', {}, children);
+      case 'BR':
+        return '\n';
+      case 'BLOCKQUOTE':
+        return jsx('element', { type: 'quote' }, children);
+      case 'P':
+        return jsx('element', { type: 'paragraph' }, children);
+      case 'A':
+        return jsx(
+          'element',
+          { type: 'link', url: el.getAttribute('href') },
+          children
+        );
+      default:
+        return children;
+    }
   };
 
   const renderElement = useCallback((props) => {
@@ -33,20 +67,19 @@ function Experiment2() {
 
   return (
     <>
-      <h2>Experiment 2 : Serializing(Plain Text)</h2>
+      <h2>Experiment 4 : Deserializing(HTML)</h2>
       <p>
         <a href='https://docs.slatejs.org/concepts/10-serializing#deserializing'>
           참고
         </a>
       </p>
-      <Slate
-        editor={editor}
-        value={initialValue}
-        onChange={(value) => {
-          const content = serialize(value);
-          setText(content);
-        }}
-      >
+      <p>
+        Need :{' '}
+        <a href='https://www.npmjs.com/package/slate-hyperscript'>
+          slate-hyperscript
+        </a>
+      </p>
+      <Slate editor={editor} value={initialValue}>
         <Editable
           className={styles.editor}
           renderElement={renderElement}
@@ -102,4 +135,4 @@ const DefaultElement = (props) => {
   return <p>{props.children}</p>;
 };
 
-export default Experiment2;
+export default Experiment4;

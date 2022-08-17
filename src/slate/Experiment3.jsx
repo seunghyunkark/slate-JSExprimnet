@@ -1,31 +1,55 @@
+import escapeHtml from 'escape-html';
 import { useCallback, useState } from 'react';
-import axios from 'axios';
-import { createEditor, Node } from 'slate';
-import {
-  Slate,
-  Scrubber,
-  Text,
-  Editor,
-  Editable,
-  withReact,
-} from 'slate-react';
+import { createEditor, Text } from 'slate';
+import { Slate, Editable, withReact } from 'slate-react';
 import styles from '../../styles/Wyswyg.module.css';
 import { CustomEditor } from './CustomEditor';
 import styled from 'styled-components';
-import { setTextRange } from 'typescript';
 
 function Experiment3() {
   const [editor] = useState(() => withReact(createEditor()));
-  const [plainText, setPlainText] = useState('');
+  const [text, setText] = useState('');
   const initialValue = [
     {
       type: 'paragraph',
-      children: [{ text: 'Click the button ...' }],
+      children: [{ text: 'Text Something ...' }],
     },
   ];
 
-  const serialize = (nodes) => {
-    setPlainText(nodes.map((n) => Node.string(n)).join('\n'));
+  const serialize = (node) => {
+    let nodeText = escapeHtml(node.text);
+    if (Text.isText(node)) {
+      if (node['custom']) {
+        nodeText = `<strong>` + nodeText + `</strong>`;
+      }
+
+      if (node['italic']) {
+        nodeText = `<em>` + nodeText + `</em>`;
+      }
+
+      if (node['underlined']) {
+        nodeText = `<u>` + nodeText + `</u>`;
+      }
+      // Other marks should go here like above
+
+      return nodeText;
+    }
+
+    if (Array.isArray(node)) {
+      return node.map((subNode) => serializeSubNode(subNode)).join('');
+    }
+
+    return serializeSubNode(node);
+  };
+
+  const serializeSubNode = (node) => {
+    const children = node.children.map((n) => serialize(n)).join('');
+    switch (node.type) {
+      case 'change':
+        return `<p><Strike>${children}</Strike></p>`;
+      default:
+        return `<p>${children}</p>`;
+    }
   };
 
   const renderElement = useCallback((props) => {
@@ -40,19 +64,23 @@ function Experiment3() {
     return <ChangeMark {...props} />;
   }, []);
 
-  const [text, setText] = useState('');
-
   return (
     <>
-      <h2>Experiment 3 : Serialiing(HTML)</h2>
+      <h2>Experiment 3 : Serializing(HTML)</h2>
       <p>
-        <a href='https://docs.slatejs.org/concepts/10-serializing'>참고</a>
+        <a href='https://gist.github.com/abhishekbhardwaj/168c13869ac043f070e954e0057dcbd7'>
+          참고
+        </a>
+      </p>
+      <p>
+        Need :{' '}
+        <a href='https://www.npmjs.com/package/escape-html'>escape-html</a>
       </p>
       <Slate
         editor={editor}
         value={initialValue}
         onChange={(value) => {
-          const content = value.map((n) => Node.string(n)).join('\n');
+          const content = serialize(value);
           setText(content);
         }}
       >
@@ -80,7 +108,7 @@ function Experiment3() {
           </button>{' '}
         </div>
       </Slate>
-      Plain Text: {text}
+      Text: {text}
     </>
   );
 }

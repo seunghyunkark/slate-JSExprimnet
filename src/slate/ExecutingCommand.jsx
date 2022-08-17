@@ -1,5 +1,4 @@
 import { useCallback, useState } from 'react';
-import axios from 'axios';
 import { createEditor } from 'slate';
 import { Slate, Editable, withReact } from 'slate-react';
 import styles from '../../styles/Wyswyg.module.css';
@@ -8,7 +7,6 @@ import styled from 'styled-components';
 
 function ExecutingCommand() {
   const [editor] = useState(() => withReact(createEditor()));
-  const [text, setText] = useState('');
   const initialValue = [
     {
       type: 'paragraph',

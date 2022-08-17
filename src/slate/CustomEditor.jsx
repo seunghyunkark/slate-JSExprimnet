@@ -1,4 +1,4 @@
-import { Transforms, Text, Editor, Node } from 'slate';
+import { Transforms, Text, Editor } from 'slate';
 
 export const CustomEditor = {
   isMarkActive(editor) {

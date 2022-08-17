@@ -1,12 +1,11 @@
 import { useCallback, useState } from 'react';
 import styled from 'styled-components';
-import { createEditor, Transforms, Descendant, Editor } from 'slate';
-import { Slate, Editable, withReact, useSlate } from 'slate-react';
+import { createEditor, Transforms, Editor } from 'slate';
+import { Slate, Editable, withReact } from 'slate-react';
 import styles from '../../styles/Wyswyg.module.css';
 
 function CustomElement() {
   const [editor] = useState(() => withReact(createEditor()));
-  const [text, setText] = useState('');
   const initialValue = [
     {
       type: 'paragraph',

@@ -1,14 +1,7 @@
 import { useCallback, useState } from 'react';
 import axios from 'axios';
 import { Node, createEditor } from 'slate';
-import {
-  Slate,
-  Scrubber,
-  Text,
-  Editor,
-  Editable,
-  withReact,
-} from 'slate-react';
+import { Slate, Editable, withReact } from 'slate-react';
 import styles from '../../styles/Wyswyg.module.css';
 import { CustomEditor } from './CustomEditor';
 import styled from 'styled-components';

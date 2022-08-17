@@ -1,13 +1,7 @@
-import { useCallback, useState } from 'react';
-import styled from 'styled-components';
-import axios from 'axios';
-import { createEditor, Transforms, Descendant } from 'slate';
+import { useState } from 'react';
+import { createEditor } from 'slate';
 import { Slate, Editable, withReact } from 'slate-react';
 import styles from '../../styles/Wyswyg.module.css';
-
-const Orange = styled.span`
-  color: salmon;
-`;
 
 function AddingEventHandler() {
   const [editor] = useState(() => withReact(createEditor()));
