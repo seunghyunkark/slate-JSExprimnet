@@ -12,7 +12,7 @@ function Experiment3() {
   const initialValue = [
     {
       type: 'paragraph',
-      children: [{ text: 'Text Something ...' }],
+      children: [{ text: 'Text something ...' }],
     },
   ];
 
@@ -108,7 +108,8 @@ function Experiment3() {
           </button>{' '}
         </div>
       </Slate>
-      Text: {text}
+      <strong>Serialize : </strong>
+      {text}
     </>
   );
 }

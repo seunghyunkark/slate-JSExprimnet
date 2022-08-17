@@ -1,14 +1,28 @@
-import { useCallback, useState } from 'react';
+import { useState } from 'react';
 import { createEditor, Node } from 'slate';
 import { Slate, Editable, withReact } from 'slate-react';
 import styles from '../../styles/Wyswyg.module.css';
-import { CustomEditor } from './CustomEditor';
-import styled from 'styled-components';
 import { jsx } from 'slate-hyperscript';
 
 function Experiment4() {
   const [editor] = useState(() => withReact(createEditor()));
-  const [text, setText] = useState('');
+  const [HTMLtext, setHTMLText] = useState('');
+  const initialValue = [
+    {
+      type: 'paragraph',
+      children: [
+        {
+          text: `<p>An opening paragraph with a <a href="https://example.com">link</a> in it.</p>
+      <blockquote><p>A wise quote.</p></blockquote>
+      <p>A closing paragraph!</p>`,
+        },
+      ],
+    },
+  ];
+
+  const serialize = (nodes) => {
+    return nodes.map((n) => Node.string(n)).join('\n');
+  };
 
   const deserialize = (el, markAttributes = {}) => {
     if (el.nodeType === Node.TEXT_NODE) {
@@ -22,7 +36,7 @@ function Experiment4() {
     // define attributes for text nodes
     switch (el.nodeName) {
       case 'strong':
-        nodeAttributes.custom = true;
+        nodeAttributes.bold = true;
     }
 
     const children = Array.from(el.childNodes)
@@ -52,19 +66,6 @@ function Experiment4() {
         return children;
     }
   };
-
-  const renderElement = useCallback((props) => {
-    switch (props.element.type) {
-      case 'change':
-        return <ChangeLine {...props} />;
-      default:
-        return <DefaultElement {...props} />;
-    }
-  }, []);
-  const renderLeaf = useCallback((props) => {
-    return <ChangeMark {...props} />;
-  }, []);
-
   return (
     <>
       <h2>Experiment 4 : Deserializing(HTML)</h2>
@@ -79,60 +80,26 @@ function Experiment4() {
           slate-hyperscript
         </a>
       </p>
-      <Slate editor={editor} value={initialValue}>
-        <Editable
-          className={styles.editor}
-          renderElement={renderElement}
-          renderLeaf={renderLeaf}
-        />
-        <div>
-          <button
-            onMouseDown={(event) => {
-              event.preventDefault();
-              CustomEditor.toggleMark(editor);
-            }}
-          >
-            Change Mark
-          </button>{' '}
-          <button
-            onMouseDown={(event) => {
-              event.preventDefault();
-              CustomEditor.toggleBlock(editor);
-            }}
-          >
-            Change Line
-          </button>{' '}
-        </div>
+      <a></a>
+      <Slate
+        editor={editor}
+        value={initialValue}
+        onChange={(value) => {
+          const content = serialize(value);
+          setHTMLText(content);
+        }}
+      >
+        <Editable className={styles.editor} />
       </Slate>
-      Text: {text}
+      <div>
+        <strong>HTML :</strong>
+        {HTMLtext}
+      </div>
+      <div>
+        <strong>Deserialize :</strong> {JSON.stringify(deserialize(HTMLtext))}
+      </div>
     </>
   );
 }
-
-const Strike = styled.span`
-  text-decoration: line-through;
-`;
-
-const ChangeLine = (props) => {
-  return (
-    <p>
-      <Strike>{props.children}</Strike>
-    </p>
-  );
-};
-const ChangeMark = (props) => {
-  return (
-    <span
-      {...props.attributes}
-      style={{ fontWeight: props.leaf.custom ? 'bold' : 'normal' }}
-    >
-      {props.children}
-    </span>
-  );
-};
-
-const DefaultElement = (props) => {
-  return <p>{props.children}</p>;
-};
 
 export default Experiment4;
