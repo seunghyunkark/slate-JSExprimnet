@@ -5,7 +5,6 @@ import styles from '../../styles/Wyswyg.module.css';
 
 function CustomFormatting() {
   const [editor] = useState(() => withReact(createEditor()));
-  const [text, setText] = useState('');
   const initialValue = [
     {
       type: 'paragraph',

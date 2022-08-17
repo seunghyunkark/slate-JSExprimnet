@@ -3,9 +3,7 @@ import dynamic from 'next/dynamic';
 const Slate = dynamic(() => import('../src/editors/SlatePage'), {
   ssr: false,
 });
-const ColorChange = dynamic(() => import('../src/slate/ColorChange'), {
-  ssr: false,
-});
+
 const AddingEventHandler = dynamic(
   () => import('../src/slate/AddingEventHandler'),
   {
@@ -21,7 +19,16 @@ const CustomFormatting = dynamic(
     ssr: false,
   }
 );
-const Experiments = dynamic(() => import('../src/slate/Experiments'), {
+const ExecutingCommand = dynamic(
+  () => import('../src/slate/ExecutingCommand'),
+  {
+    ssr: false,
+  }
+);
+const Experiment = dynamic(() => import('../src/slate/Experiment'), {
+  ssr: false,
+});
+const HTMLContent = dynamic(() => import('../src/slate/HTMLContent'), {
   ssr: false,
 });
 
@@ -29,11 +36,12 @@ export default function SlateTest() {
   return (
     <>
       <h1>🏏 Using Slate</h1>
-      <Experiments />
+      {/* <HTMLContent /> */}
+      <Experiment />
+      <ExecutingCommand />
       <CustomFormatting />
       <CustomElement />
       <AddingEventHandler />
-      <ColorChange />
       <Slate />
     </>
   );

@@ -63,6 +63,7 @@ function SlateContainer() {
               (op) => 'set_selection' !== op.type
             );
             if (isAstChange) {
+              // localStroge에 저장하는 법에서 가져옴(https://docs.slatejs.org/v/v0.47/walkthroughs/saving-to-a-database)
               const content = JSON.stringify(value);
               setText(content);
             }
