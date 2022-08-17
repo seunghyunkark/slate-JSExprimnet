@@ -9,30 +9,19 @@ const Orange = styled.span`
   color: salmon;
 `;
 
-function ColorChange() {
+function AddingEventHandler() {
   const [editor] = useState(() => withReact(createEditor()));
   const [text, setText] = useState('');
-  const initialValue: Descendant[] = [
+  const initialValue = [
     {
       type: 'paragraph',
-      children: [{ text: 'Hello World' }],
+      children: [{ text: 'Type &' }],
     },
   ];
 
-  const handlePost = async () => {
-    axios
-      .post('http://pcanpi.iptime.org:9999/simple_color', {
-        text: 'Hello World',
-      })
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((err) => console.warn(err));
-  };
   return (
     <>
-      <h2>Color Change</h2>
-      <p> POST : http://pcanpi.iptime.org:9999/simple_color</p>
+      <h2>Adding Event Handlers</h2>
       <div className={styles.editor}>
         <Slate
           editor={editor}
@@ -47,15 +36,20 @@ function ColorChange() {
             }
           }}
         >
-          <Editable />
+          <Editable
+            onKeyDown={(event) => {
+              if (event.key === '&') {
+                // Prevent the ampersand character from being inserted.
+                event.preventDefault();
+                // Execute the `insertText` method when the event occurs.
+                editor.insertText('and');
+              }
+            }}
+          />
         </Slate>
       </div>
       <div>{text}</div>
-      <button className={styles.button} onClick={handlePost}>
-        Change Color
-      </button>
     </>
   );
 }
-
-export default ColorChange;
+export default AddingEventHandler;

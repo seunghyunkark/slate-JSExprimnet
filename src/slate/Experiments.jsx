@@ -11,7 +11,7 @@ const Orange = styled.span`
 function Experiments() {
   const [editor] = useState(() => withReact(createEditor()));
   const [text, setText] = useState('');
-  const initialValue: Descendant[] = [
+  const initialValue = [
     {
       type: 'paragraph',
       children: [{ text: 'Experiments ...' }],

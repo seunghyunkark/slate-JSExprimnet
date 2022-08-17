@@ -9,7 +9,7 @@ const Orange = styled.span`
 `;
 
 function SlateContainer() {
-  const initialValue: Descendant[] = [
+  const initialValue = [
     {
       type: 'paragraph',
       children: [{ text: 'A line of text in a paragraph.' }],
@@ -40,8 +40,16 @@ function SlateContainer() {
           </a>
         </li>
         <li>
-          paragraph 단위별 변화 : styled component 태그 값 반영 가능
+          paragraph 단위별 변화 : styled component 태그 값 반영 가능{' '}
           <a href='https://docs.slatejs.org/walkthroughs/03-defining-custom-elements'>
+            참고
+          </a>
+        </li>
+        <li>
+          타입 에러 관련 : The type error still happens on the latest version,
+          0.77.2, even after using the Editor.isBlock or Element.isElement type
+          predicates. BaseElement doesn’t have a type property{' '}
+          <a href='https://lightrun.com/answers/ianstormtaylor-slate-property-type-does-not-exist-on-type-node-when-trying-to-apply-custom-formatting'>
             참고
           </a>
         </li>

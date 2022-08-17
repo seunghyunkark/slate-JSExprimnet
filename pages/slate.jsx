@@ -15,6 +15,12 @@ const AddingEventHandler = dynamic(
 const CustomElement = dynamic(() => import('../src/slate/CustomElement'), {
   ssr: false,
 });
+const CustomFormatting = dynamic(
+  () => import('../src/slate/CustomFormatting'),
+  {
+    ssr: false,
+  }
+);
 const Experiments = dynamic(() => import('../src/slate/Experiments'), {
   ssr: false,
 });
@@ -24,6 +30,7 @@ export default function SlateTest() {
     <>
       <h1>🏏 Using Slate</h1>
       <Experiments />
+      <CustomFormatting />
       <CustomElement />
       <AddingEventHandler />
       <ColorChange />
