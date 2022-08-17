@@ -8,7 +8,7 @@ function CustomFormatting() {
   const initialValue = [
     {
       type: 'paragraph',
-      children: [{ text: 'Block contents and press ` key ...' }],
+      children: [{ text: 'Mark contents and press ` key ...' }],
     },
   ];
 

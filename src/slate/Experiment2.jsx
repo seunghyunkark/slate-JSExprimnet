@@ -1,27 +1,25 @@
 import { useCallback, useState } from 'react';
 import axios from 'axios';
-import { createEditor } from 'slate';
-import {
-  Slate,
-  Scrubber,
-  Text,
-  Editor,
-  Editable,
-  withReact,
-} from 'slate-react';
+import { createEditor, Node } from 'slate';
+import { Slate, Editable, withReact } from 'slate-react';
 import styles from '../../styles/Wyswyg.module.css';
 import { CustomEditor } from './CustomEditor';
 import styled from 'styled-components';
+import { setTextRange } from 'typescript';
 
-function HTMLContent() {
+function Experiment2() {
   const [editor] = useState(() => withReact(createEditor()));
-  const [text, setText] = useState('');
+  const [plainText, setPlainText] = useState('');
   const initialValue = [
     {
       type: 'paragraph',
       children: [{ text: 'Click the button ...' }],
     },
   ];
+
+  const serialize = (nodes) => {
+    return nodes.map((n) => Node.string(n)).join('\n');
+  };
 
   const renderElement = useCallback((props) => {
     switch (props.element.type) {
@@ -35,10 +33,22 @@ function HTMLContent() {
     return <ChangeMark {...props} />;
   }, []);
 
+  const [text, setText] = useState('');
+
   return (
     <>
-      <h2>Saving and Loading HTML Content</h2>
-      <Slate editor={editor} value={initialValue}>
+      <h2>Experiment 2 : Serialiing(Plain Text)</h2>
+      <p>
+        <a href='https://docs.slatejs.org/concepts/10-serializing'>참고</a>
+      </p>
+      <Slate
+        editor={editor}
+        value={initialValue}
+        onChange={(value) => {
+          const content = serialize(value);
+          setText(content);
+        }}
+      >
         <Editable
           className={styles.editor}
           renderElement={renderElement}
@@ -61,25 +71,9 @@ function HTMLContent() {
           >
             Change Line
           </button>{' '}
-          <button
-            onClick={() => {
-              editor.getFragment;
-              axios
-                .post('http://pcanpi.iptime.org:9999/simple_color', {
-                  text: 'Hello World',
-                })
-                .then((res) => {
-                  console.log('responsive : ', res);
-                  console.log('first data : ', res.data[0]);
-                  CustomEditor.addData(editor, res.data[0]);
-                })
-                .catch((err) => console.log(err));
-            }}
-          >
-            POST
-          </button>
         </div>
       </Slate>
+      Text: {text}
     </>
   );
 }
@@ -110,4 +104,4 @@ const DefaultElement = (props) => {
   return <p>{props.children}</p>;
 };
 
-export default HTMLContent;
+export default Experiment2;

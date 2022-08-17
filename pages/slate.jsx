@@ -25,10 +25,15 @@ const ExecutingCommand = dynamic(
     ssr: false,
   }
 );
-const Experiment = dynamic(() => import('../src/slate/Experiment'), {
+const Experiment1 = dynamic(() => import('../src/slate/Experiment1'), {
   ssr: false,
 });
-const HTMLContent = dynamic(() => import('../src/slate/HTMLContent'), {
+
+const Experiment2 = dynamic(() => import('../src/slate/Experiment2'), {
+  ssr: false,
+});
+
+const Experiment3 = dynamic(() => import('../src/slate/Experiment3'), {
   ssr: false,
 });
 
@@ -36,8 +41,9 @@ export default function SlateTest() {
   return (
     <>
       <h1>🏏 Using Slate</h1>
-      {/* <HTMLContent /> */}
-      <Experiment />
+      <Experiment3 />
+      <Experiment2 />
+      <Experiment1 />
       <ExecutingCommand />
       <CustomFormatting />
       <CustomElement />

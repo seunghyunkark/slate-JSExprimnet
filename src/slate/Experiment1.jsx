@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react';
 import axios from 'axios';
-import { createEditor } from 'slate';
+import { Node, createEditor } from 'slate';
 import {
   Slate,
   Scrubber,
@@ -13,8 +13,7 @@ import styles from '../../styles/Wyswyg.module.css';
 import { CustomEditor } from './CustomEditor';
 import styled from 'styled-components';
 
-function Experiment() {
-  const handlePost = async () => {};
+function Experiment1() {
   const [editor] = useState(() => withReact(createEditor()));
   const [text, setText] = useState('');
   const initialValue = [
@@ -38,9 +37,16 @@ function Experiment() {
 
   return (
     <>
-      <h2>Experiment</h2>
+      <h2>Experiment 1 : Insert Data</h2>
       <p> POST : http://pcanpi.iptime.org:9999/simple_color</p>
-      <Slate editor={editor} value={initialValue}>
+      <Slate
+        editor={editor}
+        value={initialValue}
+        onChange={(value) => {
+          const content = value.map((n) => Node.string(n)).join('\n');
+          setText(content);
+        }}
+      >
         <Editable
           className={styles.editor}
           renderElement={renderElement}
@@ -48,27 +54,11 @@ function Experiment() {
         />
         <div>
           <button
-            onMouseDown={(event) => {
-              event.preventDefault();
-              CustomEditor.toggleMark(editor);
-            }}
-          >
-            Change Mark
-          </button>{' '}
-          <button
-            onMouseDown={(event) => {
-              event.preventDefault();
-              CustomEditor.toggleBlock(editor);
-            }}
-          >
-            Change Line
-          </button>{' '}
-          <button
             onClick={() => {
               editor.getFragment;
               axios
                 .post('http://pcanpi.iptime.org:9999/simple_color', {
-                  text: 'Hello World',
+                  text: text,
                 })
                 .then((res) => {
                   console.log('responsive : ', res);
@@ -112,4 +102,4 @@ const DefaultElement = (props) => {
   return <p>{props.children}</p>;
 };
 
-export default Experiment;
+export default Experiment1;
