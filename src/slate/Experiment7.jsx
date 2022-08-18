@@ -7,7 +7,7 @@ import styled from 'styled-components';
 import axios from 'axios';
 import { deserialize, serializePlain } from './serialize';
 
-function Experiment6() {
+function Experiment7() {
   const [editor] = useState(() => withReact(createEditor()));
   const [text, setText] = useState('');
   const [nodeData, setNodeData] = useState('');
@@ -39,7 +39,7 @@ function Experiment6() {
 
   return (
     <>
-      <h2>Experiment 6 : Cursored Text Sending</h2>
+      <h2>Experiment 7 : Get Styles from Nodes</h2>
       <p> POST : http://pcanpi.iptime.org:9999/simple_color</p>
       <Slate
         editor={editor}
@@ -148,4 +148,4 @@ const DefaultElement = (props) => {
   return <p>{props.children}</p>;
 };
 
-export default Experiment6;
+export default Experiment7;

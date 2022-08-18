@@ -14,7 +14,7 @@ function Experiment5() {
   const initialValue = [
     {
       type: 'paragraph',
-      children: [{ text: '' }],
+      children: [{ text: 'First ...' }],
     },
   ];
   const [editorValue, setEditorValue] = useState(initialValue);

@@ -1,8 +1,8 @@
-import { Location, Transforms, Text, Editor } from 'slate';
+import { Node, Transforms, Text, Editor } from 'slate';
 
 export const CustomEditor = {
-  isCursorOn(editor) {
-    return Location.isLocation([0, 0]);
+  isSelect(editor) {
+    return editor.selection;
   },
 
   isMarkActive(editor) {
@@ -56,4 +56,5 @@ export const CustomEditor = {
     editor.deleteBackward('block');
     editor.insertFragment(fragment);
   },
+  //클릭한 노드 자체를 바꾸는 방법?
 };
