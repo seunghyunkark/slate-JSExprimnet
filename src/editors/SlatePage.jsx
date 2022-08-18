@@ -84,7 +84,6 @@ function SlateContainer() {
           </tr>
         </tbody>
       </table>
-      <button className={styles.button}>오렌지</button>
     </>
   );
 }
