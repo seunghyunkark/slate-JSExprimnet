@@ -1,4 +1,5 @@
 import { Transforms, Text, Editor } from 'slate';
+import { ELEMENT_LIST } from './CustomElement';
 
 export const CustomEditor = {
   isSelect(editor) {
@@ -16,7 +17,7 @@ export const CustomEditor = {
 
   isBlockActive(editor) {
     const [match] = Editor.nodes(editor, {
-      match: (n) => n.type === 'change',
+      match: (n) => n.type === ELEMENT_LIST,
     });
 
     return !!match;
@@ -35,7 +36,7 @@ export const CustomEditor = {
     const isActive = CustomEditor.isBlockActive(editor);
     Transforms.setNodes(
       editor,
-      { type: isActive ? null : 'change' },
+      { type: isActive ? null : 'li' },
       { match: (n) => Editor.isBlock(editor, n) }
     );
   },

@@ -41,6 +41,7 @@ function Experiment6() {
           const selection = CustomEditor.isSelect(editor);
           const path = selection.focus.path;
           const selectedNode = [value[path[0]]];
+          //console.log(selection);
           const sendingText = serializePlain(selectedNode);
           setText(sendingText);
           setNodeData(JSON.stringify(value));

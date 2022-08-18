@@ -1,25 +1,18 @@
 import styled from 'styled-components';
-const Strike = styled.span`
-  text-decoration: line-through;
+
+export const ELEMENT_LIST = 'li' || 'correct';
+
+const Orange = styled.p`
+  color: orange;
 `;
 
 export const Element = ({ attribute, children, element }) => {
   switch (element.type) {
-    case 'change':
-      return <ChangeLine {...attribute}>{children}</ChangeLine>;
+    case 'li':
+      return <li {...attribute}>{children}</li>;
+    case 'correct':
+      return <Orange {...attribute}>{children}</Orange>;
     default:
-      return <DefaultElement {...attribute}>{children}</DefaultElement>;
+      return <span {...attribute}>{children}</span>;
   }
-};
-
-const ChangeLine = (props) => {
-  return (
-    <p>
-      <Strike>{props.children}</Strike>
-    </p>
-  );
-};
-
-const DefaultElement = (props) => {
-  return <p>{props.children}</p>;
 };
