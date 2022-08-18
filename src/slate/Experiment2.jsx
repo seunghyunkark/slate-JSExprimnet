@@ -4,6 +4,7 @@ import { Slate, Editable, withReact } from 'slate-react';
 import styles from '../../styles/Wyswyg.module.css';
 import { CustomEditor } from './CustomEditor';
 import styled from 'styled-components';
+import { serializePlain } from './serialize';
 
 function Experiment2() {
   const [editor] = useState(() => withReact(createEditor()));
@@ -14,10 +15,6 @@ function Experiment2() {
       children: [{ text: 'Text something ...' }],
     },
   ];
-
-  const serialize = (nodes) => {
-    return nodes.map((n) => Node.string(n)).join('\n');
-  };
 
   const renderElement = useCallback((props) => {
     switch (props.element.type) {
@@ -43,7 +40,7 @@ function Experiment2() {
         editor={editor}
         value={initialValue}
         onChange={(value) => {
-          const content = serialize(value);
+          const content = serializePlain(value);
           setText(content);
         }}
       >

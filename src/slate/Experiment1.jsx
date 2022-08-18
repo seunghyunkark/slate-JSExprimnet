@@ -56,7 +56,7 @@ function Experiment1() {
                 .then((res) => {
                   console.log('responsive : ', res);
                   console.log('first data : ', res.data[0]);
-                  CustomEditor.addData(editor, res.data[0]);
+                  CustomEditor.addText(editor, res.data[0]);
                 })
                 .catch((err) => console.log(err));
             }}

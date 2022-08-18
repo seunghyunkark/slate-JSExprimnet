@@ -5,6 +5,8 @@ import { Slate, Editable, withReact } from 'slate-react';
 import styles from '../../styles/Wyswyg.module.css';
 import { CustomEditor } from './CustomEditor';
 import styled from 'styled-components';
+import { serializeHTML } from './serialize';
+// import { serializeHTML } from './serialize';
 
 function Experiment3() {
   const [editor] = useState(() => withReact(createEditor()));
@@ -16,41 +18,41 @@ function Experiment3() {
     },
   ];
 
-  const serialize = (node) => {
-    let nodeText = escapeHtml(node.text);
-    if (Text.isText(node)) {
-      if (node['custom']) {
-        nodeText = `<strong>` + nodeText + `</strong>`;
-      }
+  // const serialize = (node) => {
+  //   let nodeText = escapeHtml(node.text);
+  //   if (Text.isText(node)) {
+  //     if (node['custom']) {
+  //       nodeText = `<strong>` + nodeText + `</strong>`;
+  //     }
 
-      if (node['italic']) {
-        nodeText = `<em>` + nodeText + `</em>`;
-      }
+  //     if (node['italic']) {
+  //       nodeText = `<em>` + nodeText + `</em>`;
+  //     }
 
-      if (node['underlined']) {
-        nodeText = `<u>` + nodeText + `</u>`;
-      }
-      // Other marks should go here like above
+  //     if (node['underlined']) {
+  //       nodeText = `<u>` + nodeText + `</u>`;
+  //     }
+  //     // Other marks should go here like above
 
-      return nodeText;
-    }
+  //     return nodeText;
+  //   }
 
-    if (Array.isArray(node)) {
-      return node.map((subNode) => serializeSubNode(subNode)).join('');
-    }
+  //   if (Array.isArray(node)) {
+  //     return node.map((subNode) => serializeSubNode(subNode)).join('');
+  //   }
 
-    return serializeSubNode(node);
-  };
+  //   return serializeSubNode(node);
+  // };
 
-  const serializeSubNode = (node) => {
-    const children = node.children.map((n) => serialize(n)).join('');
-    switch (node.type) {
-      case 'change':
-        return `<p><Strike>${children}</Strike></p>`;
-      default:
-        return `<p>${children}</p>`;
-    }
-  };
+  // const serializeSubNode = (node) => {
+  //   const children = node.children.map((n) => serialize(n)).join('');
+  //   switch (node.type) {
+  //     case 'change':
+  //       return `<p><Strike>${children}</Strike></p>`;
+  //     default:
+  //       return `<p>${children}</p>`;
+  //   }
+  // };
 
   const renderElement = useCallback((props) => {
     switch (props.element.type) {
@@ -80,7 +82,7 @@ function Experiment3() {
         editor={editor}
         value={initialValue}
         onChange={(value) => {
-          const content = serialize(value);
+          const content = serializeHTML(value);
           setText(content);
         }}
       >
