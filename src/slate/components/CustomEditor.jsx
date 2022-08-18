@@ -1,4 +1,4 @@
-import { Node, Transforms, Text, Editor } from 'slate';
+import { Transforms, Text, Editor } from 'slate';
 
 export const CustomEditor = {
   isSelect(editor) {

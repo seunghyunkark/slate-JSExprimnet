@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { createEditor } from 'slate';
 import { Slate, Editable, withReact } from 'slate-react';
 import styles from '../../styles/Wyswyg.module.css';
-import { deserialize, serializePlain } from './serialize';
+import { deserialize, serializePlain } from './utils/serialize';
 
 function Experiment4() {
   const [editor] = useState(() => withReact(createEditor()));

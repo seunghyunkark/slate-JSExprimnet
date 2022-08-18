@@ -1,11 +1,9 @@
-import { useCallback, useState } from 'react';
+import { useState } from 'react';
 import axios from 'axios';
 import { Node, createEditor } from 'slate';
 import { Slate, Editable, withReact } from 'slate-react';
 import styles from '../../styles/Wyswyg.module.css';
-import { CustomEditor } from './CustomEditor';
-import styled from 'styled-components';
-
+import { CustomEditor } from './components/CustomEditor';
 function Experiment1() {
   const [editor] = useState(() => withReact(createEditor()));
   const [text, setText] = useState('');
@@ -15,18 +13,6 @@ function Experiment1() {
       children: [{ text: 'Click the button ...' }],
     },
   ];
-
-  const renderElement = useCallback((props) => {
-    switch (props.element.type) {
-      case 'change':
-        return <ChangeLine {...props} />;
-      default:
-        return <DefaultElement {...props} />;
-    }
-  }, []);
-  const renderLeaf = useCallback((props) => {
-    return <ChangeMark {...props} />;
-  }, []);
 
   return (
     <>
@@ -40,11 +26,7 @@ function Experiment1() {
           setText(content);
         }}
       >
-        <Editable
-          className={styles.editor}
-          renderElement={renderElement}
-          renderLeaf={renderLeaf}
-        />
+        <Editable className={styles.editor} />
         <div>
           <button
             onClick={() => {
@@ -68,31 +50,5 @@ function Experiment1() {
     </>
   );
 }
-
-const Strike = styled.span`
-  text-decoration: line-through;
-`;
-
-const ChangeLine = (props) => {
-  return (
-    <p>
-      <Strike>{props.children}</Strike>
-    </p>
-  );
-};
-const ChangeMark = (props) => {
-  return (
-    <span
-      {...props.attributes}
-      style={{ fontWeight: props.leaf.custom ? 'bold' : 'normal' }}
-    >
-      {props.children}
-    </span>
-  );
-};
-
-const DefaultElement = (props) => {
-  return <p>{props.children}</p>;
-};
 
 export default Experiment1;

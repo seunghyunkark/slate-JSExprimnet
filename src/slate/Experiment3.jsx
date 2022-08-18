@@ -1,12 +1,11 @@
-import escapeHtml from 'escape-html';
 import { useCallback, useState } from 'react';
-import { createEditor, Text } from 'slate';
+import { createEditor } from 'slate';
 import { Slate, Editable, withReact } from 'slate-react';
 import styles from '../../styles/Wyswyg.module.css';
-import { CustomEditor } from './CustomEditor';
-import styled from 'styled-components';
-import { serializeHTML } from './serialize';
-// import { serializeHTML } from './serialize';
+import { CustomEditor } from './components/CustomEditor';
+import { serializeHTML } from './utils/serialize';
+import { Element } from './components/CustomElement';
+import { Leaf } from './components/CustomFormatting';
 
 function Experiment3() {
   const [editor] = useState(() => withReact(createEditor()));
@@ -17,55 +16,8 @@ function Experiment3() {
       children: [{ text: 'Text something ...' }],
     },
   ];
-
-  // const serialize = (node) => {
-  //   let nodeText = escapeHtml(node.text);
-  //   if (Text.isText(node)) {
-  //     if (node['custom']) {
-  //       nodeText = `<strong>` + nodeText + `</strong>`;
-  //     }
-
-  //     if (node['italic']) {
-  //       nodeText = `<em>` + nodeText + `</em>`;
-  //     }
-
-  //     if (node['underlined']) {
-  //       nodeText = `<u>` + nodeText + `</u>`;
-  //     }
-  //     // Other marks should go here like above
-
-  //     return nodeText;
-  //   }
-
-  //   if (Array.isArray(node)) {
-  //     return node.map((subNode) => serializeSubNode(subNode)).join('');
-  //   }
-
-  //   return serializeSubNode(node);
-  // };
-
-  // const serializeSubNode = (node) => {
-  //   const children = node.children.map((n) => serialize(n)).join('');
-  //   switch (node.type) {
-  //     case 'change':
-  //       return `<p><Strike>${children}</Strike></p>`;
-  //     default:
-  //       return `<p>${children}</p>`;
-  //   }
-  // };
-
-  const renderElement = useCallback((props) => {
-    switch (props.element.type) {
-      case 'change':
-        return <ChangeLine {...props} />;
-      default:
-        return <DefaultElement {...props} />;
-    }
-  }, []);
-  const renderLeaf = useCallback((props) => {
-    return <ChangeMark {...props} />;
-  }, []);
-
+  const renderElement = useCallback((props) => <Element {...props} />, []);
+  const renderLeaf = useCallback((props) => <Leaf {...props} />, []);
   return (
     <>
       <h2>Experiment 3 : Serializing(HTML)</h2>
@@ -115,31 +67,5 @@ function Experiment3() {
     </>
   );
 }
-
-const Strike = styled.span`
-  text-decoration: line-through;
-`;
-
-const ChangeLine = (props) => {
-  return (
-    <p>
-      <Strike>{props.children}</Strike>
-    </p>
-  );
-};
-const ChangeMark = (props) => {
-  return (
-    <span
-      {...props.attributes}
-      style={{ fontWeight: props.leaf.custom ? 'bold' : 'normal' }}
-    >
-      {props.children}
-    </span>
-  );
-};
-
-const DefaultElement = (props) => {
-  return <p>{props.children}</p>;
-};
 
 export default Experiment3;

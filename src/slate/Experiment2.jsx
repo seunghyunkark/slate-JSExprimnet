@@ -1,10 +1,12 @@
 import { useCallback, useState } from 'react';
-import { createEditor, Node } from 'slate';
+import { createEditor } from 'slate';
 import { Slate, Editable, withReact } from 'slate-react';
 import styles from '../../styles/Wyswyg.module.css';
-import { CustomEditor } from './CustomEditor';
+import { CustomEditor } from './components/CustomEditor';
 import styled from 'styled-components';
-import { serializePlain } from './serialize';
+import { serializePlain } from './utils/serialize';
+import { Element } from './components/CustomElement';
+import { Leaf } from './components/CustomFormatting';
 
 function Experiment2() {
   const [editor] = useState(() => withReact(createEditor()));
@@ -16,18 +18,8 @@ function Experiment2() {
     },
   ];
 
-  const renderElement = useCallback((props) => {
-    switch (props.element.type) {
-      case 'change':
-        return <ChangeLine {...props} />;
-      default:
-        return <DefaultElement {...props} />;
-    }
-  }, []);
-  const renderLeaf = useCallback((props) => {
-    return <ChangeMark {...props} />;
-  }, []);
-
+  const renderElement = useCallback((props) => <Element {...props} />, []);
+  const renderLeaf = useCallback((props) => <Leaf {...props} />, []);
   return (
     <>
       <h2>Experiment 2 : Serializing(Plain Text)</h2>
@@ -72,31 +64,5 @@ function Experiment2() {
     </>
   );
 }
-
-const Strike = styled.span`
-  text-decoration: line-through;
-`;
-
-const ChangeLine = (props) => {
-  return (
-    <p>
-      <Strike>{props.children}</Strike>
-    </p>
-  );
-};
-const ChangeMark = (props) => {
-  return (
-    <span
-      {...props.attributes}
-      style={{ fontWeight: props.leaf.custom ? 'bold' : 'normal' }}
-    >
-      {props.children}
-    </span>
-  );
-};
-
-const DefaultElement = (props) => {
-  return <p>{props.children}</p>;
-};
 
 export default Experiment2;
