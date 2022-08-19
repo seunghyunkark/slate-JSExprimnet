@@ -57,10 +57,15 @@ const Experiment8 = dynamic(() => import('../src/slate/Experiment8'), {
   ssr: false,
 });
 
+const Experiment9 = dynamic(() => import('../src/slate/Experiment9'), {
+  ssr: false,
+});
+
 export default function SlateTest() {
   return (
     <>
       <h1>🏏 Using Slate</h1>
+      <Experiment9 />
       <Experiment8 />
       <Experiment7 />
       <Experiment6 />

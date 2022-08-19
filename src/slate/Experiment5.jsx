@@ -3,7 +3,6 @@ import { createEditor } from 'slate';
 import { Slate, Editable, withReact } from 'slate-react';
 import styles from '../../styles/Wyswyg.module.css';
 import { CustomEditor } from './components/CustomEditor';
-import styled from 'styled-components';
 import axios from 'axios';
 import { deserialize, serializePlain } from './utils/serialize';
 import { Element } from './components/CustomElement';
@@ -55,7 +54,7 @@ function Experiment5() {
           <button
             onMouseDown={(event) => {
               event.preventDefault();
-              CustomEditor.toggleMark(editor);
+              CustomEditor.toggleMark(editor, 'custom');
             }}
           >
             Change Mark
@@ -63,7 +62,7 @@ function Experiment5() {
           <button
             onMouseDown={(event) => {
               event.preventDefault();
-              CustomEditor.toggleBlock(editor);
+              CustomEditor.toggleBlock(editor, 'correct');
             }}
           >
             Change Line

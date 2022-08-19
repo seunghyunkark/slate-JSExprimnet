@@ -1,5 +1,5 @@
 import { useState, useCallback } from 'react';
-import { createEditor } from 'slate';
+import { createEditor, Editor, Transforms } from 'slate';
 import { Slate, Editable, withReact } from 'slate-react';
 import styles from '../../styles/Wyswyg.module.css';
 import { CustomEditor } from './components/CustomEditor';
@@ -8,7 +8,7 @@ import { deserialize, serializePlain } from './utils/serialize';
 import { Element } from './components/CustomElement';
 import { Leaf } from './components/CustomFormatting';
 
-function Experiment8() {
+function Experiment9() {
   const [editor] = useState(() => withReact(createEditor()));
   const [text, setText] = useState('');
   const [nodeData, setNodeData] = useState('');
@@ -31,30 +31,10 @@ function Experiment8() {
 
   return (
     <>
-      <h2>Experiment 8 : Moifying Current Node and Making Sentence Nodes</h2>
+      <h2>Experiment 9 : Styling Nodes</h2>
       <p> POST : http://pcanpi.iptime.org:9999/simple_color</p>
       <p>
-        <li>
-          Transforms.insertNodes, removeNodes를 이용해서 줄바꿈이 이상해지는 일
-          없이 노드를 수정할 수 있다{' '}
-          <a href='https://docs.slatejs.org/api/transforms#transforms.insertnodes-editor-editor-nodes-node-or-node-options'>
-            참고
-          </a>
-        </li>
-        <li>
-          onKeyDown 이벤트를 통해 특정 키를 눌렀을 때 (예: 마침표, 물음표,
-          느낌표 등) 새로운 노드를 삽입할 수 있다.
-        </li>
-        <li>
-          노드 단위별로 텍스트 데이터를 내보내고 이를 오버라이딩 할 수 있다.
-        </li>
-        <li>
-          노드가 끊어질 때, 실제 텍스트는 없지만 새롭게 삽입된 노드가 있을 경우
-          해당 노드를 삭제하기 위해 delete 버튼을 눌러야한다. 이 경우 두 번
-          delete 키를 눌러야 공백이 지워지는 경우가 발생한다.(눈에 보이는 공백
-          지우기 위해 한 번, 눈에 보이지 않는 노드를 지우기 위해 한 번 입력해서
-          총 두 번)
-        </li>
+        <li>renderLeaf(mark)가 renderElement(block)보다 우선적으로 렌더링됨</li>
       </p>
       <Slate
         editor={editor}
@@ -142,4 +122,4 @@ function Experiment8() {
   );
 }
 
-export default Experiment8;
+export default Experiment9;

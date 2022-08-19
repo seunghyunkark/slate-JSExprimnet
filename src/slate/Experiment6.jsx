@@ -56,7 +56,7 @@ function Experiment6() {
           <button
             onMouseDown={(event) => {
               event.preventDefault();
-              CustomEditor.toggleMark(editor);
+              CustomEditor.toggleMark(editor, 'custom');
             }}
           >
             Change Mark
@@ -64,7 +64,7 @@ function Experiment6() {
           <button
             onMouseDown={(event) => {
               event.preventDefault();
-              CustomEditor.toggleBlock(editor);
+              CustomEditor.toggleBlock(editor, 'correct');
             }}
           >
             Change Line

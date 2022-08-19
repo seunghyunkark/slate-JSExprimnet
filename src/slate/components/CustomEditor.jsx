@@ -1,46 +1,44 @@
-import { Transforms, Text, Editor } from 'slate';
-import { ELEMENT_LIST } from './CustomElement';
+import { Transforms, Editor } from 'slate';
 
 export const CustomEditor = {
-  isSelect(editor) {
-    return editor.selection;
-  },
-
-  isMarkActive(editor) {
+  isMarkActive(editor, format) {
     const [match] = Editor.nodes(editor, {
-      match: (n) => n.custom === true,
+      match: (n) => n[format] === true,
       universal: true,
     });
 
     return !!match;
   },
 
-  isBlockActive(editor) {
+  isBlockActive(editor, format) {
     const [match] = Editor.nodes(editor, {
-      match: (n) => n.type === ELEMENT_LIST,
+      match: (n) => n.type === format,
     });
 
     return !!match;
   },
 
-  toggleMark(editor) {
-    const isActive = CustomEditor.isMarkActive(editor);
-    Transforms.setNodes(
-      editor,
-      { custom: isActive ? null : true },
-      { match: (n) => Text.isText(n), split: true }
-    );
+  toggleMark(editor, format) {
+    const isActive = CustomEditor.isMarkActive(editor, format);
+    if (isActive) {
+      Editor.removeMark(editor, format);
+    } else {
+      Editor.addMark(editor, format, true);
+    }
   },
 
-  toggleBlock(editor) {
-    const isActive = CustomEditor.isBlockActive(editor);
+  toggleBlock(editor, format) {
+    const isActive = CustomEditor.isBlockActive(editor, format);
     Transforms.setNodes(
       editor,
-      { type: isActive ? null : 'li' },
+      { type: isActive ? null : format },
       { match: (n) => Editor.isBlock(editor, n) }
     );
   },
 
+  isSelect(editor) {
+    return editor.selection;
+  },
   //텍스트 데이터 추가, 제거 가능
   addText(editor, text) {
     editor.deleteBackward('line');
@@ -76,14 +74,15 @@ export const CustomEditor = {
     if (event.key === '.' || event.key === '?' || event.key === '!') {
       event.preventDefault();
       editor.insertText(event.key);
+      // 노드 생성해서 붙이기
+      const sentence = {
+        type: 'sentence',
+        children: [{ text: '' }],
+      };
+      Transforms.insertNodes(editor, sentence);
+      Transforms.move(editor);
       // 또는
-      Editor.insertBreak(editor);
-      // const sentence = {
-      //   type: 'sentence',
-      //   children: [{ text: '' }],
-      // };
-      // Transforms.insertNodes(editor, sentence);
-      // Transforms.move(editor);
+      // Editor.insertBreak(editor);
     }
   },
   createParagraph(event, editor) {
@@ -101,5 +100,12 @@ export const CustomEditor = {
       Transforms.insertNodes(editor, sentence);
       Transforms.move(editor);
     }
+  },
+  addNewNode(editor) {
+    const sentence = {
+      type: 'sentence',
+      children: [{ text: '' }],
+    };
+    Transforms.insertNodes(editor, sentence);
   },
 };

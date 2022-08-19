@@ -39,7 +39,7 @@ function ExecutingCommand() {
           <button
             onMouseDown={(event) => {
               event.preventDefault();
-              CustomEditor.toggleMark(editor);
+              CustomEditor.toggleMark(editor, 'custom');
             }}
           >
             Change Mark
@@ -47,7 +47,7 @@ function ExecutingCommand() {
           <button
             onMouseDown={(event) => {
               event.preventDefault();
-              CustomEditor.toggleBlock(editor);
+              CustomEditor.toggleBlock(editor, 'change');
             }}
           >
             Change Line
