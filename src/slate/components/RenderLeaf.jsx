@@ -3,6 +3,13 @@ import styled from 'styled-components';
 const Blue = styled.span`
   color: blue;
 `;
+const Red = styled.span`
+  color: red;
+`;
+
+const Green = styled.span`
+  color: green;
+`;
 
 export const Leaf = ({ attributes, children, leaf }) => {
   if (leaf.bold) {
@@ -20,11 +27,15 @@ export const Leaf = ({ attributes, children, leaf }) => {
   if (leaf.underline) {
     children = <u>{children}</u>;
   }
+  // Customized
   if (leaf.custom) {
-    children = <strong>{children}</strong>;
+    children = <Green>{children}</Green>;
   }
-  if (leaf.color) {
+  if (leaf.blue) {
     children = <Blue>{children}</Blue>;
+  }
+  if (leaf.red) {
+    children = <Red>{children}</Red>;
   }
   return <span {...attributes}>{children}</span>;
 };

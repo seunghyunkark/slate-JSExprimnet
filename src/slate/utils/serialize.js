@@ -9,16 +9,30 @@ export const serializePlain = (nodes) => {
 export const serializeHTML = (node) => {
   let nodeText = escapeHtml(node.text);
   if (Text.isText(node)) {
-    if (node['custom']) {
+    if (node['bold']) {
       nodeText = `<strong>` + nodeText + `</strong>`;
     }
-
+    if (node['code']) {
+      nodeText = `<code>` + nodeText + `</code>`;
+    }
     if (node['italic']) {
       nodeText = `<em>` + nodeText + `</em>`;
     }
 
     if (node['underlined']) {
       nodeText = `<u>` + nodeText + `</u>`;
+    }
+
+    if (node['custom']) {
+      nodeText = `<span style="color:green">` + nodeText + `</span>`;
+    }
+
+    if (node['blue']) {
+      nodeText = `<span style="color:blue">` + nodeText + `</span>`;
+    }
+
+    if (node['red']) {
+      nodeText = `<span style="color:red">` + nodeText + `</span>`;
     }
     // Other marks should go here like above
 
@@ -35,10 +49,24 @@ export const serializeHTML = (node) => {
 const serializeSubNode = (node) => {
   const children = node.children.map((n) => serializeHTML(n)).join('');
   switch (node.type) {
+    case 'block-quote':
+      return `<blockquote>${children}</blockquote>`;
+    case 'heading-one':
+      return `<h1>${children}</h1>`;
+    case 'heading-two':
+      return `<h2>${children}</h2>`;
+    case 'list':
+      return `<li>${children}</li>`;
+    case 'paragraph':
+      return `<p>${children}</p>`;
+    case 'correct':
+      return `<Orange>${children}</Orange>`;
     case 'change':
       return `<p><Strike>${children}</Strike></p>`;
+    case 'empty':
+      return `<br />`;
     default:
-      return `<p>${children}</p>`;
+      return `<span>${children}</span>`;
   }
 };
 
@@ -56,9 +84,30 @@ export const deserialize = (el, markAttributes = {}) => {
   // define attributes for text nodes
   switch (el.nodeName) {
     case 'STRONG':
-      nodeAttributes.custom = true;
+      nodeAttributes.bold = true;
+    case 'CODE':
+      nodeAttributes.code = true;
+    case 'EM':
+      nodeAttributes.italic = true;
+    case 'U':
+      nodeAttributes.underline = true;
     case 'SPAN':
-      nodeAttributes.color = true;
+      nodeAttributes.blue = true;
+  }
+
+  //element의 스타일에 따른 정의
+  const nodeStyle = window.getComputedStyle(el);
+  const color = nodeStyle.getPropertyValue('color');
+  switch (color) {
+    //green
+    case 'rgb(0, 128, 0)':
+      nodeAttributes.custom = true;
+    //blue
+    case 'rgb(0, 0, 255)':
+      nodeAttributes.blue = true;
+    //red
+    case 'rgb(255, 0, 0)':
+      nodeAttributes.red = true;
   }
 
   const children = Array.from(el.childNodes)
@@ -72,10 +121,16 @@ export const deserialize = (el, markAttributes = {}) => {
   switch (el.nodeName) {
     case 'BODY':
       return jsx('fragment', {}, children);
-    case 'BR':
-      return '\n';
+    // case 'BR':
+    //   return '\n';
     case 'BLOCKQUOTE':
-      return jsx('element', { type: 'quote' }, children);
+      return jsx('element', { type: 'block-quote' }, children);
+    case 'H1':
+      return jsx('element', { type: 'heading-one' }, children);
+    case 'H2':
+      return jsx('element', { type: 'heading-two' }, children);
+    case 'LI':
+      return jsx('element', { type: 'heading-two' }, children);
     case 'P':
       return jsx('element', { type: 'paragraph' }, children);
     case 'A':
@@ -84,6 +139,9 @@ export const deserialize = (el, markAttributes = {}) => {
         { type: 'link', url: el.getAttribute('href') },
         children
       );
+    // Customized
+    case 'BR':
+      return jsx('element', { type: 'empty' }, children);
     default:
       return children;
   }

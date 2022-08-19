@@ -2,11 +2,11 @@ import { useState, useCallback } from 'react';
 import { createEditor } from 'slate';
 import { Slate, Editable, withReact } from 'slate-react';
 import styles from '../../styles/Wyswyg.module.css';
-import { CustomEditor } from './components/CustomEditor';
+import { CustomEditor } from './utils/CustomEditor';
 import axios from 'axios';
 import { deserialize, serializePlain } from './utils/serialize';
-import { Element } from './components/CustomElement';
-import { Leaf } from './components/CustomFormatting';
+import { Element } from './components/RenderElement';
+import { Leaf } from './components/RenderLeaf';
 
 function Experiment7() {
   const [editor] = useState(() => withReact(createEditor()));
@@ -97,33 +97,33 @@ function Experiment7() {
           >
             Change Line
           </button>{' '}
-          <button
-            onClick={() => {
-              axios
-                .post('http://pcanpi.iptime.org:9999/simple_color', {
-                  text: text,
-                })
-                .then((res) => {
-                  //응답 데이터
-                  // console.log('response : ', res.data);
-                  //node 세팅. 받은 데이터를 correct 등 다른 type으로 지정할 수 있음
-                  const insertData = { type: 'correct', children: [] };
-                  res.data.forEach((item) => {
-                    //각각 [] 안에 있는 node들 벗기기
-                    const [node] = htmlStringToValue(item);
-                    //node들 한 객체(insertData)의 children에 몰아넣기
-                    insertData.children.push(node);
-                  });
-                  CustomEditor.addNode(editor, insertData);
-                })
-                .catch((err) => console.log(err));
-            }}
-          >
-            POST
-          </button>
         </div>
+        <button
+          onClick={() => {
+            axios
+              .post('http://pcanpi.iptime.org:9999/simple_color', {
+                text: text,
+              })
+              .then((res) => {
+                //응답 데이터
+                // console.log('response : ', res.data);
+                //node 세팅. 받은 데이터를 correct 등 다른 type으로 지정할 수 있음
+                const insertData = { type: 'correct', children: [] };
+                res.data.forEach((item) => {
+                  //각각 [] 안에 있는 node들 벗기기
+                  const [node] = htmlStringToValue(item);
+                  //node들 한 객체(insertData)의 children에 몰아넣기
+                  insertData.children.push(node);
+                });
+                CustomEditor.addNode(editor, insertData);
+              })
+              .catch((err) => console.log(err));
+          }}
+        >
+          POST
+        </button>
+        {text}
       </Slate>
-      <strong>Send : </strong> {text}
       <table className={styles.table}>
         <thead>
           <tr>

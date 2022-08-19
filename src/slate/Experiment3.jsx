@@ -2,10 +2,10 @@ import { useCallback, useState } from 'react';
 import { createEditor } from 'slate';
 import { Slate, Editable, withReact } from 'slate-react';
 import styles from '../../styles/Wyswyg.module.css';
-import { CustomEditor } from './components/CustomEditor';
+import { CustomEditor } from './utils/CustomEditor';
 import { serializeHTML } from './utils/serialize';
-import { Element } from './components/CustomElement';
-import { Leaf } from './components/CustomFormatting';
+import { Element } from './components/RenderElement';
+import { Leaf } from './components/RenderLeaf';
 
 function Experiment3() {
   const [editor] = useState(() => withReact(createEditor()));

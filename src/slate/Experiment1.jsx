@@ -3,7 +3,7 @@ import axios from 'axios';
 import { Node, createEditor } from 'slate';
 import { Slate, Editable, withReact } from 'slate-react';
 import styles from '../../styles/Wyswyg.module.css';
-import { CustomEditor } from './components/CustomEditor';
+import { CustomEditor } from './utils/CustomEditor';
 function Experiment1() {
   const [editor] = useState(() => withReact(createEditor()));
   const [text, setText] = useState('');
@@ -45,6 +45,7 @@ function Experiment1() {
           >
             POST
           </button>
+          {text}
         </div>
       </Slate>
     </>

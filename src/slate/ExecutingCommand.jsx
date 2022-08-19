@@ -2,7 +2,7 @@ import { useCallback, useState } from 'react';
 import { createEditor } from 'slate';
 import { Slate, Editable, withReact } from 'slate-react';
 import styles from '../../styles/Wyswyg.module.css';
-import { CustomEditor } from './components/CustomEditor';
+import { CustomEditor } from './utils/CustomEditor';
 import styled from 'styled-components';
 
 function ExecutingCommand() {

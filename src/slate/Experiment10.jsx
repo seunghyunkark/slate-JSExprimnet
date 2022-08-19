@@ -4,12 +4,12 @@ import { Slate, Editable, withReact } from 'slate-react';
 import styles from '../../styles/Wyswyg.module.css';
 import { CustomEditor } from './utils/CustomEditor';
 import axios from 'axios';
-import { deserialize, serializePlain } from './utils/serialize';
+import { deserialize, serializeHTML, serializePlain } from './utils/serialize';
 import { Element } from './components/RenderElement';
 import { Leaf } from './components/RenderLeaf';
 import { LeafButton, ElementButton } from './components/Button';
 
-function Experiment9() {
+function Experiment10() {
   const [editor] = useState(() => withReact(createEditor()));
   const [text, setText] = useState('');
   const [nodeData, setNodeData] = useState('');
@@ -32,7 +32,7 @@ function Experiment9() {
 
   return (
     <>
-      <h2>Experiment 9 : Styling Nodes</h2>
+      <h2>Experiment 10 : Sending HTML Text</h2>
       <p> POST : http://pcanpi.iptime.org:9999/simple_color</p>
       <p>
         <li>renderLeaf(mark)가 renderElement(block)보다 우선적으로 렌더링됨</li>
@@ -45,7 +45,7 @@ function Experiment9() {
           const selection = CustomEditor.isSelect(editor);
           const path = selection.focus.path[0];
           const selectedNode = [value[path]];
-          const sendingText = serializePlain(selectedNode);
+          const sendingText = serializeHTML(selectedNode);
           setText(sendingText);
           //현재 slate 노드 데이터들 확인
           setNodeData(JSON.stringify(value));
@@ -129,4 +129,4 @@ function Experiment9() {
   );
 }
 
-export default Experiment9;
+export default Experiment10;
