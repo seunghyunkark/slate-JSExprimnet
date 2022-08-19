@@ -8,7 +8,7 @@ function CustomElement() {
   const [editor] = useState(() => withReact(createEditor()));
   const initialValue = [
     {
-      type: 'paragraph',
+      type: 'sentence',
       children: [{ text: 'Press ` key ...' }],
     },
   ];

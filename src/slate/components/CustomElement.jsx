@@ -12,6 +12,12 @@ export const Element = ({ attribute, children, element }) => {
       return <li {...attribute}>{children}</li>;
     case 'correct':
       return <Orange {...attribute}>{children}</Orange>;
+    case 'sentence':
+      return <span {...attribute}>{children}</span>;
+    case 'empty':
+      return <br />;
+    case 'paragraph':
+      return <p {...attribute}>{children}</p>;
     default:
       return <span {...attribute}>{children}</span>;
   }
