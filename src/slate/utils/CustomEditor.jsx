@@ -53,7 +53,7 @@ export const CustomEditor = {
   },
   //텍스트 데이터 추가, 제거 가능
   addText(editor, text) {
-    editor.deleteBackward('line');
+    //editor.deleteBackward('line');
     editor.insertText(text);
   },
   //기존 node 뒤에 추가됨
@@ -75,6 +75,14 @@ export const CustomEditor = {
   },
   //클릭한 부분(path)에 인수 node를 삽입, 해당 부분에 있던 노드 삭제
   changeNode(editor, node, path) {
+    Transforms.removeNodes(editor);
+    Transforms.insertNodes(editor, node, {
+      at: [path],
+    });
+  },
+
+  //클릭한 부분(path)에 인수 node를 삽입, 해당 부분에 있던 노드 삭제, insertText(' ')
+  changeWord(editor, node, path) {
     Transforms.removeNodes(editor);
     Transforms.insertNodes(editor, node, {
       at: [path],
@@ -110,6 +118,34 @@ export const CustomEditor = {
       };
       Transforms.insertNodes(editor, empty);
       Transforms.insertNodes(editor, sentence);
+      Transforms.move(editor);
+    }
+  },
+  createWord(event, editor) {
+    if (event.key === ' ') {
+      event.preventDefault();
+      editor.insertText(event.key);
+      const word = {
+        type: 'word',
+        children: [{ text: '' }],
+      };
+      Transforms.insertNodes(editor, word);
+      Transforms.move(editor);
+    }
+  },
+  createWordParagraph(event, editor) {
+    if (event.key === 'Enter') {
+      event.preventDefault();
+      const empty = {
+        type: 'empty',
+        children: [{ text: '' }],
+      };
+      const word = {
+        type: 'word',
+        children: [{ text: '' }],
+      };
+      Transforms.insertNodes(editor, empty);
+      Transforms.insertNodes(editor, word);
       Transforms.move(editor);
     }
   },

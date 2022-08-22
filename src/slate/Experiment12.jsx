@@ -9,7 +9,7 @@ import { Element } from './components/RenderElement';
 import { Leaf } from './components/RenderLeaf';
 import { LeafButton, ElementButton } from './components/Button';
 
-function Experiment11() {
+function Experiment12() {
   const [editor] = useState(() => withReact(createEditor()));
   const [text, setText] = useState('');
   const [nodeData, setNodeData] = useState('');
@@ -32,14 +32,10 @@ function Experiment11() {
 
   return (
     <>
-      <h2>Experiment 11 : Word Sending</h2>
+      <h2>Experiment 12 : Word Variant</h2>
       <p> POST : http://pcanpi.iptime.org:9999/simple_color</p>
       <p>
-        <li>
-          {' '}
-          word 단위별로 node 객체를 생성할 수 있다. (spacebar 버튼 누를 때마다
-          객체 생성)
-        </li>
+        <li>Fix Errors: </li>
       </p>
       <Slate
         editor={editor}
@@ -96,7 +92,7 @@ function Experiment11() {
                   //응답 데이터
                   console.log('response : ', res.data);
                   //node 세팅. 받은 데이터를 correct 등 다른 type으로 지정할 수 있음
-                  const insertData = { type: 'word', children: [] };
+                  const insertData = { type: 'response', children: [] };
                   res.data.forEach((item) => {
                     //각각 [] 안에 있는 node들 벗기기
                     const [node] = htmlStringToValue(item);
@@ -105,7 +101,8 @@ function Experiment11() {
                   });
                   const selection = CustomEditor.isSelect(editor);
                   const path = selection?.focus.path[0] || 0;
-                  CustomEditor.changeWord(editor, insertData, path);
+                  CustomEditor.changeNode(editor, insertData, path);
+                  // CustomEditor.addNewNode(editor);
                 })
                 .catch((err) => console.log(err));
             }}
@@ -132,4 +129,4 @@ function Experiment11() {
   );
 }
 
-export default Experiment11;
+export default Experiment12;

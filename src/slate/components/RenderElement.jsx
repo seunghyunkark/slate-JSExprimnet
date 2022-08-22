@@ -35,7 +35,11 @@ export const Element = ({ attributes, children, element }) => {
           <Strike {...attributes}>{children}</Strike>
         </p>
       );
+    case 'response':
+      return <u {...attributes}>{children}</u>;
     case 'sentence':
+      return <span {...attributes}>{children}</span>;
+    case 'word':
       return <span {...attributes}>{children}</span>;
     case 'empty':
       return <br />;
