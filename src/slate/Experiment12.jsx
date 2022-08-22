@@ -92,7 +92,7 @@ function Experiment12() {
                   //응답 데이터
                   console.log('response : ', res.data);
                   //node 세팅. 받은 데이터를 correct 등 다른 type으로 지정할 수 있음
-                  const insertData = { type: 'response', children: [] };
+                  const insertData = { type: 'sentence', children: [] };
                   res.data.forEach((item) => {
                     //각각 [] 안에 있는 node들 벗기기
                     const [node] = htmlStringToValue(item);
