@@ -62,7 +62,7 @@ function Experiment8() {
         onChange={(value) => {
           //마우스 커서가 있는 곳의 데이터만 보내도록 함
           const selection = CustomEditor.isSelect(editor);
-          const path = selection.focus.path[0];
+          const path = selection?.focus.path[0] || 0;
           const selectedNode = [value[path]];
           const sendingText = serializePlain(selectedNode);
           setText(sendingText);
@@ -115,7 +115,7 @@ function Experiment8() {
                   insertData.children.push(node);
                 });
                 const selection = CustomEditor.isSelect(editor);
-                const path = selection.focus.path[0];
+                const path = selection?.focus.path[0] || 0;
                 CustomEditor.changeNode(editor, insertData, path);
                 // CustomEditor.addNewNode(editor);
               })

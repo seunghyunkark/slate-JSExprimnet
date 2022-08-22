@@ -35,7 +35,14 @@ function Experiment10() {
       <h2>Experiment 10 : Sending HTML Text</h2>
       <p> POST : http://pcanpi.iptime.org:9999/simple_color</p>
       <p>
-        <li>renderLeaf(mark)가 renderElement(block)보다 우선적으로 렌더링됨</li>
+        {' '}
+        <li>
+          Mark 중 color가 중복되어 겹치지 않으려면 removeMark 메서드 적절히 이용
+        </li>
+        <li>
+          deserialize 과정에서 switch문 유의하기 : 지정되지 않은 마크까지
+          지정되는 경우가 생김
+        </li>
       </p>
       <Slate
         editor={editor}
@@ -43,7 +50,7 @@ function Experiment10() {
         onChange={(value) => {
           //마우스 커서가 있는 곳의 데이터만 보내도록 함
           const selection = CustomEditor.isSelect(editor);
-          const path = selection.focus.path[0];
+          const path = selection?.focus.path[0] || 0;
           const selectedNode = [value[path]];
           const sendingText = serializeHTML(selectedNode);
           setText(sendingText);
@@ -100,7 +107,7 @@ function Experiment10() {
                     insertData.children.push(node);
                   });
                   const selection = CustomEditor.isSelect(editor);
-                  const path = selection.focus.path[0];
+                  const path = selection?.focus.path[0] || 0;
                   CustomEditor.changeNode(editor, insertData, path);
                   // CustomEditor.addNewNode(editor);
                 })

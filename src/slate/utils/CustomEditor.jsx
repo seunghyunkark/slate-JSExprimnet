@@ -23,6 +23,18 @@ export const CustomEditor = {
     if (isActive) {
       Editor.removeMark(editor, format);
     } else {
+      if (format === 'custom') {
+        Editor.removeMark(editor, 'red');
+        Editor.removeMark(editor, 'blue');
+      }
+      if (format === 'red') {
+        Editor.removeMark(editor, 'custom');
+        Editor.removeMark(editor, 'blue');
+      }
+      if (format === 'blue') {
+        Editor.removeMark(editor, 'red');
+        Editor.removeMark(editor, 'custom');
+      }
       Editor.addMark(editor, format, true);
     }
   },

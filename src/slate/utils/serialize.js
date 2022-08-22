@@ -85,29 +85,34 @@ export const deserialize = (el, markAttributes = {}) => {
   switch (el.nodeName) {
     case 'STRONG':
       nodeAttributes.bold = true;
+      break;
     case 'CODE':
       nodeAttributes.code = true;
+      break;
     case 'EM':
       nodeAttributes.italic = true;
+      break;
     case 'U':
       nodeAttributes.underline = true;
-    case 'SPAN':
-      nodeAttributes.blue = true;
+      break;
   }
 
   //element의 스타일에 따른 정의
-  const nodeStyle = window.getComputedStyle(el);
-  const color = nodeStyle.getPropertyValue('color');
+  const nodeStyle = el.style;
+  const color = nodeStyle.color;
   switch (color) {
     //green
-    case 'rgb(0, 128, 0)':
+    case 'green':
       nodeAttributes.custom = true;
+      break;
     //blue
-    case 'rgb(0, 0, 255)':
+    case 'blue':
       nodeAttributes.blue = true;
+      break;
     //red
-    case 'rgb(255, 0, 0)':
+    case 'red':
       nodeAttributes.red = true;
+      break;
   }
 
   const children = Array.from(el.childNodes)
