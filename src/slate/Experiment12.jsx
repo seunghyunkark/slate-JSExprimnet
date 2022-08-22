@@ -32,7 +32,7 @@ function Experiment12() {
 
   return (
     <>
-      <h2>Experiment 12 : Word Variant</h2>
+      <h2>Experiment 12 : Second Word Changing</h2>
       <p> POST : http://pcanpi.iptime.org:9999/simple_color</p>
       <p>
         <li>Fix Errors: </li>
