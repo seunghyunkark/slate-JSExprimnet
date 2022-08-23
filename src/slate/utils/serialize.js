@@ -19,7 +19,7 @@ export const serializeHTML = (node) => {
       nodeText = `<em>` + nodeText + `</em>`;
     }
 
-    if (node['underlined']) {
+    if (node['underline']) {
       nodeText = `<u>` + nodeText + `</u>`;
     }
 

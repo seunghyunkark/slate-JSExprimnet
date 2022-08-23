@@ -81,6 +81,9 @@ export const CustomEditor = {
     });
   },
 
+  insertNode(editor, node, path) {
+    Transforms.insertNodes(editor, node, { at: [path] });
+  },
   //클릭한 부분(path)에 인수 node를 삽입, 해당 부분에 있던 노드 삭제, insertText(' ')
   changeWord(editor, node, path) {
     Transforms.removeNodes(editor);

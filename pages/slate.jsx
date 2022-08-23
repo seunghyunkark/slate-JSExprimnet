@@ -77,7 +77,7 @@ export default function SlateTest() {
   return (
     <>
       <h1>🏏 Using Slate</h1>
-      {/* <Experiment12 /> */}
+      <Experiment12 />
       <Experiment11 />
       <Experiment10 />
       <Experiment9 />

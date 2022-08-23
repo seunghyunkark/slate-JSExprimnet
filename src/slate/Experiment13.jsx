@@ -9,7 +9,7 @@ import { Element } from './components/RenderElement';
 import { Leaf } from './components/RenderLeaf';
 import { LeafButton, ElementButton } from './components/Button';
 
-function Experiment12() {
+function Experiment13() {
   const [editor] = useState(() => withReact(createEditor()));
   const [text, setText] = useState('');
   const [nodeData, setNodeData] = useState('');
@@ -32,8 +32,17 @@ function Experiment12() {
 
   return (
     <>
-      <h2>Experiment 12 : Token Change</h2>
+      <h2>Experiment 13 : Slate History</h2>
       <p> POST : http://pcanpi.iptime.org:9999/simple_token</p>
+      <p>
+        <li>
+          Need :{' '}
+          <a href='https://www.npmjs.com/package/slate-history'>
+            slate-history
+          </a>
+        </li>
+        <li>이전에 클릭했던 객체를 기억할 수 있나?</li>
+      </p>
       <Slate
         editor={editor}
         value={initialValue}
@@ -128,4 +137,4 @@ function Experiment12() {
   );
 }
 
-export default Experiment12;
+export default Experiment13;
