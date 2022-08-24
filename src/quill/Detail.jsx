@@ -120,6 +120,11 @@ export default function QuillEditor() {
           overriding 할 수 있는지 알아봐야할 듯 하다. 이 경우 선택한 부분을 매번
           저장해 놓는 방식이 필요하다.
         </li>
+        <li>
+          paragraph 별로 텍스트를 배열로 저장하고, 해당 배열의 길이를 계산해
+          텍스트가 시작되는 index 배열을 만들 수 있다. index 배열을 통해 현재
+          클릭한 텍스트가 몇 번째 텍스트인지 계산 후 보낼 수 있다.
+        </li>
       </p>
       <RestyledReactQuill
         theme='snow'
