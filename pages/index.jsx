@@ -32,10 +32,10 @@ function Home() {
             </div>
           </Link>
 
-          <Link href='/'>
+          <Link href='/quill'>
             <div className={styles.card}>
-              <h2>Test3 &rarr;</h2>
-              <p>To be continued</p>
+              <h2>Quill Test &rarr;</h2>
+              <p>Experimnets of quill component</p>
             </div>
           </Link>
           <Link href='/' className={styles.card}>
