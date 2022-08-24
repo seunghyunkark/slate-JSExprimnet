@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import ReactQuill from 'react-quill';
 import axios from 'axios';
@@ -7,6 +7,10 @@ import 'react-quill/dist/quill.snow.css';
 const Value = styled.div`
   font-size: 16px;
   color: gray;
+`;
+
+const ValueTitle = styled.span`
+  color: lightgrey;
 `;
 
 const RestyledReactQuill = styled(ReactQuill)`
@@ -32,51 +36,50 @@ const StyledButton = styled.button`
 
 export default function QuillEditor() {
   const [value, setValue] = useState('');
-  const [sendingFirstText, setSendingFirstText] = useState('');
-  const textArray = [];
-  const idxArray = [0];
+  const [textArr, setTextArr] = useState([]);
   const [idx, setIdx] = useState(0);
   const [textId, setTextId] = useState(0);
 
-  const handleFirstText = () => {
+  const postSelectedText = () => {
     axios
       .post('http://pcanpi.iptime.org:9999/simple_token', {
-        text: sendingFirstText,
+        text: textArr[textId],
       })
       .then((res) => {
         const resData = res.data.join(' ');
-        setValue(`<p>${resData}</p>`);
+        textArr[textId] = resData;
+        const newTextArr = textArr.map((item) => `<p>${item}</p>`);
+        setValue(newTextArr.join(''));
       });
   };
-  // 몇 번째 문장을 보냈는 지 알 수 있을 경우 해당 인덱스 값을 보내기
-  const handleSelectedText = () => {};
 
   const onChange = (content, delta, source, editor) => {
     setValue(editor.getHTML());
+  };
 
+  const onChangeSelection = (range, source, editor) => {
     let htmlText = value;
     //HTML str -> HTML node
     let parser = new DOMParser();
     let doc = parser.parseFromString(htmlText, 'text/html');
-    //Extract first P text
-    setSendingFirstText(doc.body.children[0]?.innerHTML);
     //Extract all P texts
+    const textArray = [];
     for (let i = 0; i < doc.body.children.length; i++) {
       textArray.push(doc.body.children[i]?.innerHTML);
     }
+    const idxArray = [0];
     for (let i = 0; i < textArray.length - 1; i++) {
       idxArray.push(idxArray[i] + textArray[i].length + 1);
     }
-    console.log('textArray : ', textArray);
-    console.log('idx Array: ', idxArray);
-  };
-
-  const onChangeSelection = (range, source, editor) => {
-    let selectedNode = getSelection()?.focusNode?.nodeValue;
-    setIdx(range.index);
-    //range : 전체 문자의 index를 나타냄. length는 줄을 바꾸었든 아니든 0
-    //source : user 라고 나옴
-    //editor: getHTML, getLength, getText 등의 함수들 정의
+    setTextArr(textArray);
+    //let selectedNode = getSelection()?.focusNode?.nodeValue;
+    let pointId = idxArray.findIndex((item) => item > range?.index);
+    setIdx(range?.index);
+    if (pointId === -1) {
+      setTextId(idxArray.length - 1);
+    } else {
+      setTextId(pointId - 1);
+    }
   };
 
   const setMultiline = () => {
@@ -86,7 +89,7 @@ export default function QuillEditor() {
   return (
     <>
       <ButtonDiv>
-        <StyledButton onClick={handleFirstText}>Send!</StyledButton>
+        <StyledButton onClick={postSelectedText}>Send!</StyledButton>
         <StyledButton onClick={setMultiline}>Set!</StyledButton>
       </ButtonDiv>
       <p>
@@ -124,10 +127,22 @@ export default function QuillEditor() {
         onChange={onChange}
         onChangeSelection={onChangeSelection}
       />
-      <Value>{value}</Value>
-      <Value>{sendingFirstText}</Value>
-      <Value>{idx}</Value>
-      <Value>{textId}</Value>
+      <Value>
+        <ValueTitle>HTML text : </ValueTitle>
+        {value}
+      </Value>
+      <Value>
+        <ValueTitle>Range Index : </ValueTitle>
+        {idx}
+      </Value>
+      <Value>
+        <ValueTitle>Selected Text : </ValueTitle>
+        {textArr[textId]}
+      </Value>
+      <Value>
+        <ValueTitle>Selected Text Index : </ValueTitle>
+        {textId}
+      </Value>
     </>
   );
 }
